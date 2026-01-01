@@ -24,20 +24,33 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Step 1: Fetch battle log
-    const battleLogResponse = await fetch(
-      `${process.env.NEXTAUTH_URL || "http://localhost:3000"}/api/battlelog/${encodeURIComponent(playerData.tag)}`,
-      {
-        headers: {
-          Authorization: request.headers.get("Authorization") || "",
-        },
-      }
-    );
+    // Step 1: Fetch battle log directly from Clash Royale API
+    const apiToken = process.env.CLASH_ROYALE_API_TOKEN;
+    if (!apiToken) {
+      throw new Error('Clash Royale API token not configured');
+    }
+
+    let cleanTag = playerData.tag.startsWith('#') ? playerData.tag.slice(1) : playerData.tag;
+    const encodedTag = encodeURIComponent(`#${cleanTag}`);
 
     let battleLog = [];
-    if (battleLogResponse.ok) {
-      const battleData = await battleLogResponse.json();
-      battleLog = battleData.success ? battleData.data : [];
+    try {
+      const battleLogResponse = await fetch(
+        `https://proxy.royaleapi.dev/v1/players/${encodedTag}/battlelog`,
+        {
+          headers: {
+            'Authorization': `Bearer ${apiToken}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      if (battleLogResponse.ok) {
+        battleLog = await battleLogResponse.json();
+      }
+    } catch (error) {
+      console.warn('Failed to fetch battle log, continuing without it:', error);
+      // Continue without battle log if it fails
     }
 
     // Step 2: Analyze battle performance in detail
