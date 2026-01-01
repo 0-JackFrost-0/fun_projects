@@ -204,21 +204,3 @@ enhanced_reward += max(0, 1 - distance / 100)  # Distance reward
 2. **For Fast Training**: Use `difficulty=60+` to accelerate learning
 3. **For Debugging**: Add print statements in reward calculation
 4. **For Better Performance**: Train for 2000+ games for optimal results
-
-## 🤝 Contributing
-
-Feel free to fork this project and submit improvements! Areas for contribution:
-- Network architecture experiments
-- Reward function optimization
-- UI/UX improvements
-- Performance optimizations
-
-## 📄 License
-
-This project is open source and available under the MIT License.
-
----
-
-**Happy Training! 🎮🤖**
-
-*Watch your AI evolve from random movements to strategic gameplay!*
