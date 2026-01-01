@@ -310,7 +310,7 @@ IMPORTANT: Only use cards that exist in the available cards list. Ensure exactly
       }, {})
     },
     upgrades: aiResponse.upgradePriority.map((cardName: string, index: number) => {
-      const card = selectedCards.find(c => c.name === cardName);
+      const card = selectedCards.find((c: any) => c.name === cardName);
       return card ? {
         cardName: card.name,
         currentLevel: card.level,

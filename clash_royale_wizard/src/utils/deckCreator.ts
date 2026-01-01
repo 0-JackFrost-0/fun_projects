@@ -472,7 +472,7 @@ export class DeckCreator {
     return selectedCards.slice(0, this.deckSize);
   }
 
-  private analyzeDeck(deck: Card[]): DeckAnalysis {
+  protected analyzeDeck(deck: Card[]): DeckAnalysis {
     if (deck.length === 0) {
       return {
         deckSize: 0,

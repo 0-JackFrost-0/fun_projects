@@ -13,9 +13,7 @@ interface Card {
     medium?: string;
   };
   elixirCost?: number;
-  rarity?: {
-    name: string;
-  };
+  rarity?: string; // API returns string directly, not object
 }
 
 interface CardGridProps {

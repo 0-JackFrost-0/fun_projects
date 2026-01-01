@@ -12,9 +12,7 @@ interface Card {
     medium?: string;
   };
   elixirCost?: number;
-  rarity?: {
-    name: string;
-  };
+  rarity?: string; // API returns string directly
 }
 
 interface CardModalProps {
@@ -81,8 +79,8 @@ export default function CardModal({ card, onClose }: CardModalProps) {
           <h3 className="text-2xl font-bold text-white mb-2">{card.name}</h3>
           
           {card.rarity && (
-            <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${getRarityColor(card.rarity.name)}`}>
-              {card.rarity.name}
+            <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${getRarityColor(card.rarity)}`}>
+              {card.rarity}
             </span>
           )}
         </div>
