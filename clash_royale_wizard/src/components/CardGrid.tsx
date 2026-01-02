@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import CardModal from './CardModal';
+import { convertToUnifiedLevel } from '@/utils/levelConverter';
 
 interface Card {
   name: string;
@@ -102,7 +103,7 @@ export default function CardGrid({ cards }: CardGridProps) {
                 {/* Level Border - Bottom translucent bar */}
                 <div className={`absolute bottom-0 left-0 right-0 h-7 ${getRarityColor(card.rarity)} opacity-80 flex items-center justify-center`}>
                   <span className="text-white text-sm font-bold drop-shadow-md">
-                    Level {card.level}
+                    Level {convertToUnifiedLevel(card.level, card.rarity || 'common', card.maxLevel)}
                   </span>
                 </div>
               </div>

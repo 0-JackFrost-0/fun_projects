@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { convertToUnifiedLevel } from '@/utils/levelConverter';
 
 interface Card {
   name: string;
@@ -21,6 +22,9 @@ interface CardModalProps {
 }
 
 export default function CardModal({ card, onClose }: CardModalProps) {
+  const unifiedLevel = convertToUnifiedLevel(card.level, card.rarity || 'common', card.maxLevel);
+  const unifiedMaxLevel = 16; // All cards now max at level 16
+  
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -50,7 +54,7 @@ export default function CardModal({ card, onClose }: CardModalProps) {
     return `https://cdn.royaleapi.com/static/img/cards-150/${card.name.toLowerCase().replace(/[^a-z0-9]/g, '')}.png`;
   };
 
-  const progressPercentage = ((card.level / card.maxLevel) * 100).toFixed(1);
+  const progressPercentage = ((unifiedLevel / unifiedMaxLevel) * 100).toFixed(1);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
@@ -96,12 +100,12 @@ export default function CardModal({ card, onClose }: CardModalProps) {
             )}
             
             <div className="bg-blue-600/20 border border-blue-500/30 rounded-lg p-3 text-center">
-              <p className="text-2xl font-bold text-blue-300">{card.level}</p>
+              <p className="text-2xl font-bold text-blue-300">{unifiedLevel}</p>
               <p className="text-xs text-gray-400">Current Level</p>
             </div>
             
             <div className="bg-green-600/20 border border-green-500/30 rounded-lg p-3 text-center">
-              <p className="text-2xl font-bold text-green-300">{card.maxLevel}</p>
+              <p className="text-2xl font-bold text-green-300">{unifiedMaxLevel}</p>
               <p className="text-xs text-gray-400">Max Level</p>
             </div>
             
